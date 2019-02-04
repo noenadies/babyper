@@ -41,6 +41,10 @@
 <body>
     <canvas id="renderCanvas"></canvas>
     <script>
+   var rot=0;
+        var vectormi3;
+var mic;
+var yaobcu=false;
         var canvas = document.getElementById("renderCanvas");
 
         var delayCreateScene = function () {
@@ -75,6 +79,25 @@
         	
             engine.displayLoadingUI();
         
+        
+            vectormi3=new BABYLON.Vector3(0, -0.5, -1.0);
+
+
+
+
+
+
+
+
+
+        	BABYLON.SceneLoader.ImportMesh("", "./do/", "cu.babylon", scene, function (newMeshes) {
+           mic=newMeshes;
+
+         //  console.log(mic); 
+           yaobcu=true;
+
+            });
+
         	BABYLON.SceneLoader.ImportMesh("", "./scenes/", "dummy3.babylon", scene, function (newMeshes, particleSystems, skeletons) {
                 var skeleton = skeletons[0];
         
@@ -189,7 +212,7 @@
         
                 engine.hideLoadingUI();
             });	
-        
+            console.log(mic);
             return scene;
         };
         
@@ -198,6 +221,16 @@
         var scene = delayCreateScene();
 
         engine.runRenderLoop(function () {
+rot=rot+0.01;
+ vectormi3.set(0, 0,rot);
+ if(yaobcu){
+     if(rot<=1){console.log(mic);}
+
+     objmeshrota(mic);
+
+ }
+
+
             if (scene) {
                 scene.render();
             }
@@ -207,6 +240,16 @@
         window.addEventListener("resize", function () {
             engine.resize();
         });
+
+ function objmeshrota(objm){
+    objm.forEach(function(mi){
+
+mi.rotation.x=rot;
+
+
+});
+
+ }    
     </script>
 </body>
 </html>
